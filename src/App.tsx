@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_TODOS } from './graphql/queries/crudQueries';
+
+import Header from './components/Header';
+import AddTodo from './components/AddTodo';
+
 import './App.css';
 
 interface Todo {
@@ -17,12 +21,11 @@ const App: React.FC = () => {
     return <p>Error</p>
   }
   console.log(data);
-  // useEffect(() => {
-
-  // }, []);
 
   return (
     <div className="App">
+      <Header />
+      <AddTodo />
       {data.Todos.map((elem: Todo) => {
         // return (
         //   <div key={elem.id}>

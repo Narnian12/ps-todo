@@ -18,4 +18,3 @@ export const INSERT_TODO = gql`
     }
   }
 `;
-
