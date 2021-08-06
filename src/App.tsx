@@ -1,21 +1,37 @@
+import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_TODOS } from './graphql/queries/crudQueries';
 import './App.css';
 
-function App() {
+interface Todo {
+  id: number,
+  name: string,
+  description: string
+}
+
+const App: React.FC = () => {
+  const { loading, error, data } = useQuery(GET_TODOS);
+  if (loading) return <p>Loading...</p>
+  if (error) {
+    console.log(error);
+    return <p>Error</p>
+  }
+  console.log(data);
+  // useEffect(() => {
+
+  // }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {data.Todos.map((elem: Todo) => {
+        // return (
+        //   <div key={elem.id}>
+        //     <p>{elem.id}</p>
+        //     <p>{elem.name}</p>
+        //     <p>{elem.description}</p>
+        //   </div>
+        // )
+      })}
     </div>
   );
 }
