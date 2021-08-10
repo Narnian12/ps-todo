@@ -2,14 +2,14 @@ import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { INSERT_TODO } from '../graphql/mutations/crudMutations';
 import { InsertTodosParams } from '../graphql/params/insertTodosParams';
-import { uuid } from 'uuidv4';
+import { v4 as uuid_v4 } from 'uuid';
 
 import './AddTodo.css';
 
 const AddTodo = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [insertTodo, { data, loading, error }] = useMutation(INSERT_TODO);
+  const [insertTodo] = useMutation(INSERT_TODO);
 
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value)
 
@@ -19,7 +19,7 @@ const AddTodo = () => {
     event.preventDefault();
     insertTodo({ 
       variables: { 
-        [InsertTodosParams.Id]: uuid(),
+        [InsertTodosParams.Id]: uuid_v4(),
         [InsertTodosParams.Name]: name,
         [InsertTodosParams.Description]: description
       }
