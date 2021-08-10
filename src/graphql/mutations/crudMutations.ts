@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { InsertTodosParams } from '../params/insertTodosParams';
 
 export const INSERT_TODO = gql`
-  mutation InsertTodo(
-    $${InsertTodosParams.Id}: Int!, 
+  mutation insertTodo(
+    $${InsertTodosParams.Id}: String!, 
     $${InsertTodosParams.Name}: String!, 
     $${InsertTodosParams.Description}: String
   ) {

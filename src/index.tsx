@@ -1,16 +1,38 @@
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache, split } from '@apollo/client';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { setContext } from '@apollo/client/link/context';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 const httpLink = createHttpLink({
-  uri: 'https://ps-todo-db2.hasura.app/v1/graphql',
+  uri: 'https://ps-todo-db.hasura.app/v1/graphql',
 });
+
+// Subscriptions require websockets
+const wsLink = new WebSocketLink({
+  uri: 'ws://ps-todo-db.hasura.app/v1/graphql',
+  options: {
+    reconnect: true
+  }
+});
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink
+);
 
 // Add Hasura admin secret header to allow permission to perform mutations and queries
 const authLink = setContext((_, { headers }) => {
-  const token = 'YbaTY91XgmrSd3DL7xR23HDB1GHCiVLKfKrfKwK5nDATLFLeLb349WeaqinEgaQo';
+  const token = 'Y3KG60bApd5xkk9AEIUtzZwo6hdfwjfIQZF3sDehMbnkt7MzYxc9jeLAdp95KZFg';
   return {
     headers: {
       ...headers,
@@ -20,7 +42,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(splitLink),
   cache: new InMemoryCache()
 });
 

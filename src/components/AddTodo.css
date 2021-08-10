@@ -1,0 +1,18 @@
+.add {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  /* background-color: lightgray; */
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.add label {
+  margin: 0px 10px;
+}
+
+.add button {
+  /* padding: 10px 20px; */
+  margin: 0px 10px;
+}
