@@ -1,10 +1,8 @@
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache, split } from '@apollo/client';
-import { WebSocketLink } from '@apollo/client/link/ws';
+import { ApolloClient, ApolloProvider, createHttpLink, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { getMainDefinition } from '@apollo/client/utilities';
 
 const token = 'Y3KG60bApd5xkk9AEIUtzZwo6hdfwjfIQZF3sDehMbnkt7MzYxc9jeLAdp95KZFg';
 

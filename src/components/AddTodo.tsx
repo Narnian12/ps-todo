@@ -1,12 +1,18 @@
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { INSERT_TODO } from '../graphql/mutations/crudMutations';
 import { InsertTodosParams } from '../graphql/params/insertTodosParams';
 import { v4 as uuid_v4 } from 'uuid';
+import { Todo } from '../todo-interface';
 
 import './AddTodo.css';
 
-const AddTodo = () => {
+interface AddTodoInterface {
+  todos: Todo[],
+  setTodos: Dispatch<SetStateAction<Todo[]>>;
+}
+
+const AddTodo: React.FC<AddTodoInterface> = ({ todos, setTodos }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [insertTodo] = useMutation(INSERT_TODO);
@@ -17,15 +23,21 @@ const AddTodo = () => {
 
   const addTodo = (event: React.SyntheticEvent) => {
     event.preventDefault();
+    let newTodo: Todo = {
+      id: uuid_v4(),
+      name: name,
+      description: description
+    };
     insertTodo({ 
       variables: { 
-        [InsertTodosParams.Id]: uuid_v4(),
-        [InsertTodosParams.Name]: name,
-        [InsertTodosParams.Description]: description
+        [InsertTodosParams.Id]: newTodo.id,
+        [InsertTodosParams.Name]: newTodo.name,
+        [InsertTodosParams.Description]: newTodo.description
       }
     });
     setName('');
     setDescription('');
+    setTodos([...todos, newTodo]);
   }
   
   return (
