@@ -1,9 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_TODOS } from '../graphql/queries/crudQueries';
+import { useMutation } from '@apollo/client';
 import { DELETE_TODO } from '../graphql/mutations/crudMutations';
 import { DeleteTodosParams } from '../graphql/params/deleteTodosParams';
-// import { GET_TODOS_SUBSCRIPTION } from '../graphql/subscriptions/crudSubscriptions';
 import { Todo } from '../todo-interface';
 
 import './Todos.css';
