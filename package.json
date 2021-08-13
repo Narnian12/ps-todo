@@ -1,6 +1,6 @@
 {
   "name": "ps_todo",
-  "homepage": "http://narnian12.github.io/ps_todo",
+  "homepage": "http://narnian12.github.io/ps-todo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
